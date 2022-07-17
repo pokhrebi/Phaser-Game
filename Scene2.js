@@ -16,4 +16,20 @@ class Scene2 extends Phaser.Scene {
              fill: "yellow"
         });
     }
+    moveShip(ship, speed) {
+        ship.y += speed;
+        if (ship.y > 270) {
+            this.resetShipPos(ship);
+        }
+    }
+    update() {
+        this.moveShip(this.ship1, 1);
+        this.moveShip(this.ship2, 2);
+        this.moveShip(this.ship3, 3);
+    }
+    resetShipPos(ship){
+        ship.y = 0;
+        var randomX = Phaser.Math.Between(0, 256);
+        ship.x = randomX;
+    }
 }
