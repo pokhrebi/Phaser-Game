@@ -32,7 +32,10 @@ class Scene1 extends Phaser.Scene {
       this.load.spritesheet("beam", "assets/spritesheets/beam.png",{
           frameWidth: 16,
           frameHeight: 16
-      })
+      });
+
+      this.load.bitmapFont("pixelFont", "assets/font/font.png", "assets/font/font.xml");
+
     }
   
     create() {
