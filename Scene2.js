@@ -57,6 +57,11 @@ class Scene2 extends Phaser.Scene {
       this.player.setCollideWorldBounds(true);
   
       this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+      this.projectiles = this.add.group();
+
+      this.physics.add.collider(this.projectiles, this.powerUps, function(projectile,powerUp){
+          projectile.destroy();
+      });
   
     }
   
@@ -71,10 +76,16 @@ class Scene2 extends Phaser.Scene {
       this.movePlayerManager();
 
       if (Phaser.Input.Keyboard.JustDown(this.spacebar)){
-       console.log("Fire!");
+       this.shootBeam();
       }
-  
+      for(var i = 0; i < this.projectiles.getChildren().length; i++) {
+          var beam = this.projectiles.getChildren()[i];
+          beam.update();
+      }
     }
+    shootBeam() {
+        var beam = new Beam(this);
+    } 
 
     movePlayerManager(){
   
