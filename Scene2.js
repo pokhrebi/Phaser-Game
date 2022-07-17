@@ -41,10 +41,52 @@ class Scene2 extends Phaser.Scene {
         this.ship2.play("ship2_anim");
         this.ship3.play("ship3_anim");
 
+        this.ship1.setInteractive();
+        this.ship2.setInteractive();
+        this.ship3.setInteractive();
+
+        this.input.on('gameobjectdown', this.destroyShip, this);
+
         this.add.text(20, 20, "Playing Game", {
             font: "25px Arial",
              fill: "yellow"
         });
+
+        this.anims.create({
+            key: "red",
+            frames: this.anims.generateFrameNumbers("power-up", {
+                start: 0,
+                end: 1
+            }),
+            frameRate: 20,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "gray",
+            frames: this.anims.generateFrameNumbers("power-up", {
+                start: 2,
+                end: 3
+            }),
+            frameRate: 20,
+            repeat: -1
+        });
+        this.powerUps = this.physics.add.group();
+
+        var maxObjects = 4;
+        for (var i = 0; i <= maxObjects; i++) {
+            var powerUp = this.physics.add.sprite(16, 16, "power-up");
+            this.powerUps.add(powerUp);
+            powerUp.setRandomPosition(0, 0, 256, 270);
+        }
+        if (Math.random() > 0.5) {
+            powerUp.play("red");
+        } else {
+            powerUp.play("gray");
+        }
+
+        powerUp.setVelocity(100, 100);
+        powerUp.setCollideWorldBounds(true);
+        powerUp.setBounce(1);
 
 
     }
@@ -65,5 +107,9 @@ class Scene2 extends Phaser.Scene {
         ship.y = 0;
         var randomX = Phaser.Math.Between(0, 256);
         ship.x = randomX;
+    }
+    destroyShip(pointer, gameObject) {
+        gameObject.setTexture("explosion");
+        gameObject.play("explode");
     }
 }
