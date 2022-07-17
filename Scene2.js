@@ -4,7 +4,7 @@ class Scene2 extends Phaser.Scene {
     }
 
     create() {
-        this.background = this.add.image(0,0, "background");
+        this.background = this.add.tileSprite(0,0, 256, 270, "background");
         this.background.setOrigin(0,0);
 
         this.ship1 = this.add.image(256/2 - 50, 270/2, "ship")
@@ -26,6 +26,8 @@ class Scene2 extends Phaser.Scene {
         this.moveShip(this.ship1, 1);
         this.moveShip(this.ship2, 2);
         this.moveShip(this.ship3, 3);
+
+        this.background.tilePositionY -= 0.5;
     }
     resetShipPos(ship){
         ship.y = 0;
